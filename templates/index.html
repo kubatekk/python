@@ -1,0 +1,29 @@
+<html>
+  <head>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <input type="text" id="email" name="email"/>
+    <button type='button' id='btn'>Submit</button>
+  </body>
+ <script>
+        function log() {
+            var email;
+            email = document.getElementById('email').value;
+            return fetch('http://localhost:5000/showContacts', {
+                body: JSON.stringify({
+                    email: email,
+                }),
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                method: 'post'
+            }).then(response => response.json(), err => {throw err}).then(response => {
+                console.log(response);
+            })
+        }
+        var btn = document.getElementById('btn');
+        btn.addEventListener('click', log);
+    </script>
+</html>

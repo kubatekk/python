@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <title>Login</title>
+  <meta charset="utf-8" />
+</head>
+<body>
+    <p>Podaj imie: <input type="text" name="firstName" id="firstName" /></p>
+    <p>Podaj nazwisko: <input type="text" name="lastName" id="lastName"/></p>
+      <p>Podaj date urodzenia: <input type="text" name="birthDay" id="birthDay" /></p>
+      <p>Podaj haslo: <input type="text" name="password" id="password"/></p>
+      <p>Podaj drugi raz haslo: <input type="text" name="passwordSecond" id="passwordSecond"/></p>
+      <p>Podaj Miejscowosc: <input type="text" name="place" id="place"/> </p>
+      <p>Podaj plec: <br>
+          Kobieta: <input type="checkbox" name="female" id="female"/><br>
+          Mezczyzna: <input type="checkbox" name="male" id="male"/></p>
+      <p>Podaj email: <input type="text" name="email" id="email"/></p>
+    <p><button type="submit" id="btn" value="Sign me up!">Sign me up!</button></p>
+ <script>
+        function log() {
+            var firstName, lastName, birthDay, pass, passSec, place, female, male, email;
+            email = document.getElementById('email').value;
+            pass = document.getElementById('password').value;
+            passSec = document.getElementById('passwordSecond').value;
+            firstName = document.getElementById('firstName').value;
+            lastName = document.getElementById('lastName').value;
+            birthDay = document.getElementById('birthDay').value;
+            place = document.getElementById('place').value;
+            female = document.getElementById('female').value;
+            male = document.getElementById('male').value;
+            fetch('http://localhost:5000/register', {
+                body: JSON.stringify({
+                    email: email,
+                    password: pass,
+                    place: place,
+                    firstName: firstName,
+                    lastName: lastName,
+                    birthDay: birthDay,
+                    male: male,
+                    female: female
+                }),
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                method: 'post'
+            }).then(response => response.json(), err => {throw err}).then(response => {
+                console.log(response);
+            })
+        }
+        var btn = document.getElementById('btn');
+        btn.addEventListener('click', log);
+    </script>
+</body>
+</html>

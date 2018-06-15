@@ -1,0 +1,15 @@
+from flask import request
+from database import db
+from check import checkUserData, hashpass
+
+import bcrypt
+import json
+
+def login():
+    users = db.users
+    req_json = request.get_json()
+    user = users.find_one({'email': req_json['email']})
+    if user:
+        if checkUserData(req_json['email'], hashpass(req_json['password'], user['password'])):
+            return json.dumps({"success": True})
+    return json.dumps({"success":False})

@@ -1,0 +1,32 @@
+<html>
+  <head>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <input type="text" id="email" name="email"/>
+    <input type="text" id="id" name="id"/>
+    <button type='button' id='btn'>Submit</button>
+  </body>
+ <script>
+        function log() {
+            var email, id;
+            email = document.getElementById('email').value;
+            id = document.getElementById('id').value;
+            fetch('http://localhost:5000/getUserInfo', {
+                body: JSON.stringify({
+                    email: email,
+                    id: id
+                }),
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                method: 'post'
+            }).then(response => response.json(), err => {throw err}).then(response => {
+                console.log(response);
+            })
+        }
+        var btn = document.getElementById('btn');
+        btn.addEventListener('click', log);
+    </script>
+</html>
